@@ -1,14 +1,35 @@
 version: '3.7'
 services:
-  mongodb_container:
-    image: mongo:latest
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: rootpassword
-    ports:
-      - 27017:27017
-    volumes:
-      - mongodb_data_container:/data/db
-
+    
+    node:
+        image: node:latest
+        container_name: library_node
+        volumes: 
+            - ../library-vue3:/home/node/library-vue3
+            - ../library-loopback4:/home/node/library-loopback4
+        working_dir: /home/node/library-vue3
+        command: ["node", "server.js"]
+        ports:
+            - "3000:3000"
+            - "8080:8080"
+        networks:
+            - overlay
+                    
+    mongo:
+        image: mongo:latest
+        container_name: library_mongo
+        environment:
+            MONGO_INITDB_ROOT_USERNAME: root
+            MONGO_INITDB_ROOT_PASSWORD: rootpassword
+        ports:
+            - 27017:27017
+        networks: 
+            - overlay
+        volumes:
+            - mongodb_data_container:/data/db
+            
 volumes:
-  mongodb_data_container:
+    mongodb_data_container:
+
+networks: 
+    overlay:

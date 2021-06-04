@@ -1,5 +1,18 @@
 version: '3.7'
 services:
+
+    nginx:
+        image: nginx:latest
+        container_name: library_nginx
+        depends_on: 
+            - node
+            - mongo
+        volumes:
+            - ./nginx:/etc/nginx/conf.d
+        ports:
+            - "80:80"
+        networks: 
+            - overlay
     
     node:
         image: node:latest
@@ -7,11 +20,13 @@ services:
         volumes: 
             - ../library-vue3:/home/node/library-vue3
             - ../library-loopback4:/home/node/library-loopback4
-        working_dir: /home/node/library-vue3
-        command: ["node", "server.js"]
+            - .:/home/node/library-infra
+        working_dir: /home/node/library-infra
+        command: bash -c "npm install pm2 -g && pm2-runtime ecosystem.config.js"
+
         ports:
             - "3000:3000"
-            - "8080:8080"
+            - "3001:3001"
         networks:
             - overlay
                     

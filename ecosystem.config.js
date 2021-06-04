@@ -10,7 +10,7 @@ module.exports = {
       name: "vue3",
       cwd: "/home/node/library-vue3",
       script: "npm",
-      args: "dev"
+      args: "run dev"
     }
   ]
 }

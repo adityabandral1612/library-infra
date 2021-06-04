@@ -1,18 +1,18 @@
 version: '3.7'
 services:
 
-    nginx:
-        image: nginx:latest
-        container_name: library_nginx
-        depends_on: 
-            - node
-            - mongo
-        volumes:
-            - ./nginx:/etc/nginx/conf.d
-        ports:
-            - "80:80"
-        networks: 
-            - overlay
+    # nginx:
+    #     image: nginx:latest
+    #     container_name: library_nginx
+    #     depends_on: 
+    #         - node
+    #         - mongo
+    #     volumes:
+    #         - ./nginx:/etc/nginx/conf.d
+    #     ports:
+    #         - "80:80"
+    #     networks: 
+    #         - overlay
     
     node:
         image: node:latest
